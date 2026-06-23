@@ -13,6 +13,7 @@ import {
   LogOut,
   Store,
   UserCircle,
+  Heart,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getInitials } from '@/lib/utils';
@@ -191,6 +192,22 @@ export default function Navbar() {
                             }}
                           />
                           <DropdownItem
+                            icon={UserCircle}
+                            label="Profil"
+                            onClick={() => {
+                              setProfileOpen(false);
+                              navigate(`/profile/${user.username}`);
+                            }}
+                          />
+                          <DropdownItem
+                            icon={Heart}
+                            label="Favorit"
+                            onClick={() => {
+                              setProfileOpen(false);
+                              navigate('/dashboard/favorites');
+                            }}
+                          />
+                          <DropdownItem
                             icon={Settings}
                             label="Pengaturan"
                             onClick={() => {
@@ -243,7 +260,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/register"
-                    className="px-4 py-2 text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 rounded-lg shadow-sm transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition-colors"
                   >
                     Daftar
                   </Link>
@@ -361,6 +378,18 @@ export default function Navbar() {
                     onClose={() => setMobileOpen(false)}
                   />
                   <MobileNavItem
+                    icon={UserCircle}
+                    label="Profil"
+                    to={`/profile/${user.username}`}
+                    onClose={() => setMobileOpen(false)}
+                  />
+                  <MobileNavItem
+                    icon={Heart}
+                    label="Favorit"
+                    to="/dashboard/favorites"
+                    onClose={() => setMobileOpen(false)}
+                  />
+                  <MobileNavItem
                     icon={Settings}
                     label="Pengaturan"
                     to="/settings"
@@ -407,7 +436,7 @@ export default function Navbar() {
                 <Link
                   to="/register"
                   onClick={() => setMobileOpen(false)}
-                  className="block w-full text-center py-2.5 text-sm font-medium rounded-lg bg-brand-500 text-white hover:bg-brand-600 transition-colors"
+                  className="block w-full text-center py-2.5 text-sm font-medium rounded-lg bg-brand-600 text-white hover:bg-brand-700 transition-colors"
                 >
                   Daftar
                 </Link>

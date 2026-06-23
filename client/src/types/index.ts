@@ -51,6 +51,9 @@ export interface Profile {
   is_banned: boolean;
   avatar_url: string;
   created_at: string;
+  is_verified?: boolean;
+  average_rating?: number;
+  review_count?: number;
 }
 
 export interface VerificationRequest {
@@ -140,4 +143,23 @@ export interface Notification {
   is_read: boolean;
   reference_id: string;
   created_at: string;
+}
+
+export interface Review {
+  id: string;
+  transaction_id: string;
+  reviewer_id: string;
+  reviewed_id: string;
+  rating: number;
+  comment: string;
+  created_at: string;
+  reviewer?: Profile;
+}
+
+export interface Favorite {
+  id: string;
+  user_id: string;
+  listing_id: string;
+  created_at: string;
+  listing?: Listing;
 }

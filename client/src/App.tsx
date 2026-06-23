@@ -19,6 +19,8 @@ import TransactionsPage from '@/pages/TransactionsPage';
 import VerificationPage from '@/pages/VerificationPage';
 import ChatPage from '@/pages/ChatPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import ProfilePage from '@/pages/ProfilePage';
+import FavoritesPage from '@/pages/FavoritesPage';
 import AdminLoginPage from '@/pages/AdminLoginPage';
 
 import AdminDashboardPage from '@/pages/admin/AdminDashboardPage';
@@ -64,6 +66,7 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/listings/:id" element={<ListingDetailPage />} />
+        <Route path="/profile/:username" element={<ProfilePage />} />
 
         {/* Protected: any authenticated user */}
         <Route
@@ -79,6 +82,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <TransactionsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/favorites"
+          element={
+            <ProtectedRoute>
+              <FavoritesPage />
             </ProtectedRoute>
           }
         />
