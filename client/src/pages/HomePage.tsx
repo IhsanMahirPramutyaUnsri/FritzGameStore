@@ -5,9 +5,11 @@ import Layout from '@/components/layout/Layout';
 import ListingCard from '@/components/listings/ListingCard';
 import Button from '@/components/common/Button';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { useAuthStore } from '@/store/authStore';
 import type { Listing } from '@/types';
 
 export default function HomePage() {
+  const session = useAuthStore((s) => s.session);
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +44,7 @@ export default function HomePage() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link to="/register">
+              <Link to={session ? '/dashboard/verification' : '/register'}>
                 <Button variant="outline" size="lg" className="border-gray-500 text-white hover:bg-white/10">
                   Mulai Jual
                 </Button>
@@ -156,9 +158,9 @@ export default function HomePage() {
             Bergabung dengan FritzStore sekarang dan mulai transaksi dengan aman.
           </p>
           <div className="mt-8">
-            <Link to="/register">
+            <Link to={session ? '/dashboard' : '/register'}>
               <Button variant="primary" size="lg">
-                Daftar Sekarang — Gratis
+                {session ? 'Buka Dashboard' : 'Daftar Sekarang — Gratis'}
               </Button>
             </Link>
           </div>

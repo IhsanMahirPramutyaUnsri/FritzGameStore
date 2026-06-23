@@ -15,15 +15,15 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 shadow-sm hover:shadow-md',
+    'bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-sm hover:shadow-md',
   secondary:
-    'bg-navy-100 text-navy-800 hover:bg-navy-200 active:bg-navy-300 dark:bg-navy-700 dark:text-white dark:hover:bg-navy-600 dark:active:bg-navy-500',
+    'bg-navy-100 text-navy-800 hover:bg-navy-200 active:bg-navy-300 dark:bg-navy-700 dark:text-gray-100 dark:hover:bg-navy-600 dark:active:bg-navy-500',
   danger:
     'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-sm',
   ghost:
     'bg-transparent text-navy-700 hover:bg-navy-100 active:bg-navy-200 dark:text-gray-300 dark:hover:bg-navy-800 dark:active:bg-navy-700',
   outline:
-    'border border-navy-200 bg-transparent text-navy-700 hover:bg-navy-50 active:bg-navy-100 dark:border-navy-600 dark:text-gray-300 dark:hover:bg-navy-800 dark:active:bg-navy-700',
+    'border border-navy-300 bg-transparent text-navy-700 hover:bg-navy-50 active:bg-navy-100 dark:border-navy-600 dark:text-gray-300 dark:hover:bg-navy-800 dark:active:bg-navy-700',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
