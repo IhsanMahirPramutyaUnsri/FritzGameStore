@@ -50,12 +50,13 @@ export default function DashboardPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-6xl px-4 py-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-navy-800 dark:text-gray-100">
             Selamat datang, {user.username}!
           </h1>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-navy-400 dark:text-navy-300">
             {isBuyer
               ? 'Jelajahi akun Genshin Impact atau ajukan verifikasi untuk mulai berjualan.'
               : isSeller
@@ -119,14 +120,14 @@ export default function DashboardPage() {
                 </Link>
               )}
               <Link to="/listings">
-                <Button variant="secondary">
+                <Button variant="outline">
                   Jelajahi Listing
                   <ArrowUpRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
               {isSeller && (
                 <Link to="/dashboard/listings">
-                  <Button variant="secondary">
+                  <Button variant="outline">
                     <Package className="mr-2 h-4 w-4" />
                     Listing Saya
                   </Button>
@@ -136,34 +137,37 @@ export default function DashboardPage() {
 
             <div className="grid gap-6 lg:grid-cols-2">
               {/* Recent Transactions */}
-              <div className="rounded-xl border border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800 p-6">
+              <div className="rounded-xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800 p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-semibold text-navy-800 dark:text-gray-100">
                     Transaksi Terbaru
                   </h2>
                   <Link
                     to="/dashboard/transactions"
-                    className="text-sm text-brand-500 hover:text-brand-600"
+                    className="text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 transition-colors"
                   >
                     Lihat Semua
                   </Link>
                 </div>
                 {transactions.length === 0 ? (
-                  <p className="text-sm text-gray-400 py-4 text-center">
-                    Belum ada transaksi
-                  </p>
+                  <div className="py-8 text-center">
+                    <ShoppingBag className="mx-auto h-8 w-8 text-navy-200 dark:text-navy-600 mb-2" />
+                    <p className="text-sm text-navy-400 dark:text-navy-500">
+                      Belum ada transaksi
+                    </p>
+                  </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {transactions.slice(0, 5).map((tx) => (
                       <div
                         key={tx.id}
-                        className="flex items-center justify-between rounded-lg bg-gray-50 dark:bg-navy-900 p-3"
+                        className="flex items-center justify-between rounded-lg bg-gray-50 dark:bg-navy-900 p-3 border border-navy-100/50 dark:border-navy-700/50"
                       >
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-navy-800 dark:text-gray-100 truncate">
                             {tx.listing?.title || 'Listing'}
                           </p>
-                          <p className="text-xs text-gray-400 mt-0.5">
+                          <p className="text-xs text-navy-400 dark:text-navy-500 mt-0.5">
                             {formatDate(tx.created_at)}
                           </p>
                         </div>
@@ -186,32 +190,37 @@ export default function DashboardPage() {
               </div>
 
               {/* Recent Notifications */}
-              <div className="rounded-xl border border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800 p-6">
+              <div className="rounded-xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800 p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-semibold text-navy-800 dark:text-gray-100">
                     Notifikasi
                   </h2>
-                  <Bell className="h-4 w-4 text-gray-400" />
+                  <div className="rounded-lg bg-navy-100 dark:bg-navy-700 p-1.5">
+                    <Bell className="h-4 w-4 text-navy-400 dark:text-navy-300" />
+                  </div>
                 </div>
                 {notifications.length === 0 ? (
-                  <p className="text-sm text-gray-400 py-4 text-center">
-                    Tidak ada notifikasi baru
-                  </p>
+                  <div className="py-8 text-center">
+                    <Bell className="mx-auto h-8 w-8 text-navy-200 dark:text-navy-600 mb-2" />
+                    <p className="text-sm text-navy-400 dark:text-navy-500">
+                      Tidak ada notifikasi baru
+                    </p>
+                  </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {notifications.map((notif) => (
                       <div
                         key={notif.id}
-                        className={`rounded-lg p-3 text-sm ${
+                        className={`rounded-lg p-3 text-sm border ${
                           notif.is_read
-                            ? 'bg-gray-50 dark:bg-navy-900'
-                            : 'bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800'
+                            ? 'bg-gray-50 dark:bg-navy-900 border-navy-100/50 dark:border-navy-700/50'
+                            : 'bg-brand-50 dark:bg-brand-900/15 border-brand-200 dark:border-brand-800'
                         }`}
                       >
                         <p className="text-navy-800 dark:text-gray-100">
                           {notif.content}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">
+                        <p className="text-xs text-navy-400 dark:text-navy-500 mt-1">
                           {formatDate(notif.created_at)}
                         </p>
                       </div>
@@ -238,20 +247,34 @@ function StatCard({
   value: string;
   color: string;
 }) {
-  const colorMap: Record<string, string> = {
-    brand: 'bg-brand-50 dark:bg-brand-900/30 text-brand-500',
-    amber: 'bg-amber-50 dark:bg-amber-900/30 text-amber-500',
-    green: 'bg-green-50 dark:bg-green-900/30 text-green-500',
-    blue: 'bg-blue-50 dark:bg-blue-900/30 text-blue-500',
+  const colorMap: Record<string, { bg: string; icon: string }> = {
+    brand: {
+      bg: 'bg-brand-50 dark:bg-brand-900/20',
+      icon: 'text-brand-600 dark:text-brand-400',
+    },
+    amber: {
+      bg: 'bg-amber-50 dark:bg-amber-900/20',
+      icon: 'text-amber-600 dark:text-amber-400',
+    },
+    green: {
+      bg: 'bg-emerald-50 dark:bg-emerald-900/20',
+      icon: 'text-emerald-600 dark:text-emerald-400',
+    },
+    blue: {
+      bg: 'bg-brand-50 dark:bg-brand-900/20',
+      icon: 'text-brand-600 dark:text-brand-400',
+    },
   };
 
+  const colors = colorMap[color] || colorMap.brand;
+
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800 p-5">
-      <div className={`inline-flex rounded-lg p-2.5 ${colorMap[color] || colorMap.brand}`}>
-        <Icon className="h-5 w-5" />
+    <div className="rounded-xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800 p-5 shadow-sm">
+      <div className={`inline-flex rounded-xl p-2.5 ${colors.bg}`}>
+        <Icon className={`h-5 w-5 ${colors.icon}`} />
       </div>
       <p className="mt-3 text-2xl font-bold text-navy-800 dark:text-gray-100">{value}</p>
-      <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
+      <p className="text-sm text-navy-400 dark:text-navy-300">{label}</p>
     </div>
   );
 }

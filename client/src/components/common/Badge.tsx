@@ -13,15 +13,15 @@ interface BadgeProps {
 
 const variantStyles: Record<BadgeVariant, string> = {
   success:
-    'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400',
+    'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:ring-emerald-800',
   warning:
-    'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400',
+    'bg-amber-50 text-amber-700 ring-1 ring-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-800',
   danger:
-    'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400',
+    'bg-red-50 text-red-700 ring-1 ring-red-200 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-800',
   info:
-    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
+    'bg-brand-50 text-brand-700 ring-1 ring-brand-200 dark:bg-brand-900/30 dark:text-brand-400 dark:ring-brand-800',
   neutral:
-    'bg-gray-100 text-gray-600 dark:bg-navy-700 dark:text-gray-400',
+    'bg-navy-100 text-navy-600 ring-1 ring-navy-200 dark:bg-navy-700 dark:text-gray-400 dark:ring-navy-600',
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
