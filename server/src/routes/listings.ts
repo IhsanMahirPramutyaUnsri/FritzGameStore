@@ -76,7 +76,8 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     const { data, error, count } = await query;
 
     if (error) {
-      res.status(500).json({ error: 'Failed to fetch listings' });
+      console.error('Supabase listings query error:', error);
+      res.status(500).json({ error: 'Failed to fetch listings', details: error.message });
       return;
     }
 
