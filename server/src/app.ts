@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import { supabaseAdmin } from './lib/supabase.js';
 
 import authRoutes from './routes/auth.js';
 import listingRoutes from './routes/listings.js';
@@ -49,8 +50,14 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`FritzStore server running on port ${PORT}`);
+  const { error } = await supabaseAdmin.from('profiles').select('id', { count: 'exact', head: true });
+  if (error) {
+    console.error('WARNING: Supabase connection test FAILED:', error.message);
+  } else {
+    console.log('Supabase connection OK');
+  }
 });
 
 export default app;

@@ -49,7 +49,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
 
     let query = supabaseAdmin
       .from('listings')
-      .select('*, seller:profiles!seller_id(id, username, avatar_url)', { count: 'exact' })
+      .select('*, seller:profiles(id, username, avatar_url)', { count: 'exact' })
       .eq('status', 'available')
       .order('created_at', { ascending: false })
       .range(offset, offset + limitNum - 1);
@@ -64,10 +64,10 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
       query = query.lte('price', parseFloat(maxPrice as string));
     }
     if (minAr) {
-      query = query.gte('ar_level', parseInt(minAr as string, 10));
+      query = query.gte('ar', parseInt(minAr as string, 10));
     }
     if (maxAr) {
-      query = query.lte('ar_level', parseInt(maxAr as string, 10));
+      query = query.lte('ar', parseInt(maxAr as string, 10));
     }
     if (search) {
       query = query.ilike('title', `%${search as string}%`);
@@ -76,13 +76,13 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     const { data, error, count } = await query;
 
     if (error) {
-      console.error('Supabase listings query error:', error);
-      res.status(500).json({ error: 'Failed to fetch listings', details: error.message });
+      console.error('Supabase listings query error:', JSON.stringify(error, null, 2));
+      res.status(500).json({ error: 'Failed to fetch listings', details: error.message, code: error.code });
       return;
     }
 
     res.json({
-      listings: data,
+      listings: data || [],
       pagination: {
         page: pageNum,
         limit: limitNum,
@@ -90,9 +90,9 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
         totalPages: Math.ceil((count || 0) / limitNum),
       },
     });
-  } catch (err) {
-    console.error('Fetch listings error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+  } catch (err: any) {
+    console.error('Fetch listings error:', err?.message || err);
+    res.status(500).json({ error: 'Internal server error', details: err?.message });
   }
 });
 
@@ -127,7 +127,7 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
   try {
     const { data, error } = await supabaseAdmin
       .from('listings')
-      .select('*, seller:profiles!seller_id(id, username, avatar_url)')
+      .select('*, seller:profiles(id, username, avatar_url)')
       .eq('id', req.params.id)
       .single();
 
